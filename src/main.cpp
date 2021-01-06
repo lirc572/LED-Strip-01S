@@ -4,6 +4,8 @@
 #define NUM_LEDS 150
 #define DATA_PIN 2
 
+#define DELAYMS 10
+
 CRGB leds[NUM_LEDS];
 
 void setup()
@@ -19,20 +21,27 @@ void loop()
     leds[dot] = CRGB::Red;
     FastLED.show();
     // leds[dot] = CRGB::Black;
-    delay(30);
+    delay(DELAYMS);
   }
   for (int dot = 0; dot < NUM_LEDS; dot++)
   {
     leds[dot] = CRGB::Green;
     FastLED.show();
     // leds[dot] = CRGB::Black;
-    delay(30);
+    delay(DELAYMS);
   }
-  for (int dot = 0; dot < NUM_LEDS; dot++)
+  for (int dot = NUM_LEDS - 1; dot >= 0; dot--)
   {
-    leds[dot] = CRGB::Blue;
+    leds[dot] = CRGB::Red;
     FastLED.show();
     // leds[dot] = CRGB::Black;
-    delay(30);
+    delay(DELAYMS);
+  }
+  for (int dot = NUM_LEDS - 1; dot >= 0; dot--)
+  {
+    leds[dot] = CRGB::Green;
+    FastLED.show();
+    // leds[dot] = CRGB::Black;
+    delay(DELAYMS);
   }
 }
