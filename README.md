@@ -2,6 +2,8 @@
 
 ![build](https://github.com/lirc572/LED-Strip-01S/workflows/PlatformIO%20CI/badge.svg)
 
+![demo](res/demo.jpg)
+
 ## Setup
 
 Clone this repository:
