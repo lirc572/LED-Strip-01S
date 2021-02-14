@@ -20,12 +20,16 @@ CRGB color = CRGB::Green;
 
 char Digit2hexchar(uint8_t digit)
 {
-  return "0123456789ABCDEF"[digit];
+  return "0123456789abcdef"[digit];
 }
 
 uint8_t HexChar2digit(char hex)
 {
-  return strchr("0123456789ABCDEF", hex) - "0123456789ABCDEF";
+  // to lower case first
+  if (hex >= 'A' && hex <= 'Z') {
+    hex += ('a' - 'A');
+  }
+  return strchr("0123456789abcdef", hex) - "0123456789abcdef";
 }
 
 String Crgb2str(CRGB color)
