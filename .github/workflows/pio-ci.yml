@@ -29,7 +29,9 @@ jobs:
         pip install --upgrade platformio
     - name: add sample config.h
       run: |
-        echo "#define WIFI_SSID \"wireless@lrc\"" >> src/config.h
-        echo "#define WIFI_PASSWORD \"password@lrc\"" >> src/config.h
+        echo '#define WIFI_SSID "wireless@lrc"' >> src/config.h
+        echo '#define WIFI_PASSWORD "password@lrc"' >> src/config.h
+        echo '#define LED_PIN 2' >> src/config.h
+        echo '#define NUM_LEDS 150' >> src/config.h
     - name: Run PlatformIO
       run: pio run -e esp01_1m
