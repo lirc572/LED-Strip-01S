@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
+#include <EEPROM.h>
 #include <FastLED.h>
 #include "config.h"
 
@@ -26,7 +27,8 @@ char Digit2hexchar(uint8_t digit)
 uint8_t HexChar2digit(char hex)
 {
   // to lower case first
-  if (hex >= 'A' && hex <= 'Z') {
+  if (hex >= 'A' && hex <= 'Z')
+  {
     hex += ('a' - 'A');
   }
   return strchr("0123456789abcdef", hex) - "0123456789abcdef";
@@ -103,8 +105,40 @@ String prepareHtmlPage()
   return htmlPage;
 }
 
+CRGB readStoredColor()
+{
+  char buff[8];
+  if ((char)EEPROM.read(0) == '#')
+  {
+    buff[0] = '#';
+    for (int i = 1; i < 7; i++)
+    {
+      buff[i] = (char)EEPROM.read(i);
+    }
+    buff[7] = '\0';
+    return Str2crgb(String(buff));
+  }
+  else
+  {
+    return Str2crgb(String("#008000"));
+  }
+}
+
+void storeColor(CRGB color)
+{
+  String colorStr = Crgb2str(color);
+  Serial.printf("Storing: <%s>\n", colorStr.c_str());
+  for (int i = 0; i < 7; i++)
+  {
+    EEPROM.write(i, (byte)colorStr[i]);
+  }
+  EEPROM.commit();
+}
+
 void setup()
 {
+  EEPROM.begin(7);
+  color = readStoredColor();
   Serial.begin(115200);
   WiFi.begin(ssid, password);
   pinMode(LED_PIN, OUTPUT);
@@ -166,7 +200,8 @@ void loop()
             sscanf(header.substring(header.indexOf("Content-Length: ")).substring(0, header.indexOf("\r")).substring(16).c_str(), "%u", &content_length);
             String content;
             client.read();
-            for (int i=0; i < content_length; i++) {
+            for (int i = 0; i < content_length; i++)
+            {
               char c = client.read();
               content += c;
             }
@@ -181,6 +216,7 @@ void loop()
             Serial.println("In GET /");
             client.println(prepareHtmlPage());
           }
+          storeColor(color);
           break;
         }
         header += line;
