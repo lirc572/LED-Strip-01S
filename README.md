@@ -4,6 +4,8 @@
 
 ![demo](res/demo.jpg)
 
+![demo](res/webpage.png)
+
 ## Setup
 
 Clone this repository:
