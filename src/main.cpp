@@ -12,9 +12,6 @@ WiFiServer server(80);
 
 String header;
 
-#define NUM_LEDS 150
-#define DATA_PIN 2
-
 #define DELAYMS 10
 
 CRGB leds[NUM_LEDS];
@@ -106,8 +103,8 @@ void setup()
 {
   Serial.begin(115200);
   WiFi.begin(ssid, password);
-  pinMode(DATA_PIN, OUTPUT);
-  FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
+  pinMode(LED_PIN, OUTPUT);
+  FastLED.addLeds<NEOPIXEL, LED_PIN>(leds, NUM_LEDS);
   for (;;)
   {
     for (int dot = 0; dot < NUM_LEDS; dot++)
